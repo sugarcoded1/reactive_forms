@@ -458,7 +458,7 @@ abstract class AbstractControl<T> {
     _status = ControlStatus.pending;
 
     if (emitEvent) {
-      this._statusChanges.add(_status);
+      _statusChanges.add(_status);
     }
 
     if (updateParent) {
