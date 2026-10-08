@@ -852,10 +852,10 @@ class FormControl<T> extends AbstractControl<T> {
   ///
   /// The control can optionally be initialized with a [value].
   ///
-  /// The [nonNullable] argument is used to determine the state of the control
-  /// when the [reset] method is called without a value. If [nonNullable] is
+  /// The [resetToInitialValue] argument is used to determine the state of the control
+  /// when the [reset] method is called without a value. If [resetToInitialValue] is
   /// true (the default), the [reset] method will reset the control to the
-  /// initial [value] provided in the constructor. If [nonNullable] is false,
+  /// initial [value] provided in the constructor. If [resetToInitialValue] is false,
   /// the [reset] method will reset the control to `null` unless a value is
   /// provided.
   ///
@@ -883,7 +883,7 @@ class FormControl<T> extends AbstractControl<T> {
   ///
   FormControl({
     T? value,
-    bool nonNullable = true,
+    bool resetToInitialValue = true,
     super.validators,
     super.asyncValidators,
     @Deprecated(
@@ -895,7 +895,7 @@ class FormControl<T> extends AbstractControl<T> {
     super.asyncValidatorsDebounceTime,
     super.touched,
     super.disabled,
-  }) : _defaultValue = nonNullable ? value : null {
+  }) : _defaultValue = resetToInitialValue ? value : null {
     if (value != null) {
       this.value = value;
     } else {
@@ -905,10 +905,10 @@ class FormControl<T> extends AbstractControl<T> {
 
   /// Gets the default value of the control.
   ///
-  /// This value is determined by the [value] and [nonNullable] arguments
+  /// This value is determined by the [value] and [resetToInitialValue] arguments
   /// passed to the constructor:
-  /// - If [nonNullable] is `true` (the default), this holds the initial [value].
-  /// - If [nonNullable] is `false`, this is `null`.
+  /// - If [resetToInitialValue] is `true` (the default), this holds the initial [value].
+  /// - If [resetToInitialValue] is `false`, this is `null`.
   ///
   /// When [reset] is called without a value, the control resets to this value.
   T? get defaultValue => _defaultValue;
@@ -1038,11 +1038,11 @@ class FormControl<T> extends AbstractControl<T> {
   ///
   /// If [value] is provided, the control is reset to that value.
   ///
-  /// If [value] is not provided (null), the behavior depends on the [nonNullable]
+  /// If [value] is not provided (null), the behavior depends on the [resetToInitialValue]
   /// argument passed to the constructor:
-  /// - If [nonNullable] is `true` (the default), the control resets to the
+  /// - If [resetToInitialValue] is `true` (the default), the control resets to the
   ///   initial value provided in the constructor.
-  /// - If [nonNullable] is `false`, the control resets to `null`.
+  /// - If [resetToInitialValue] is `false`, the control resets to `null`.
   ///
   /// If [overwriteDefaultValue] is true, then the value used to reset the
   /// control becomes the new default value of the control.
@@ -1076,31 +1076,31 @@ class FormControl<T> extends AbstractControl<T> {
   /// print(control.value); // output: 'John Doe'
   /// ```
   ///
-  /// **Reset to initial value (nonNullable: true)**
+  /// **Reset to initial value (resetToInitialValue: true)**
   /// ```dart
-  /// // nonNullable is true by default
+  /// // resetToInitialValue is true by default
   /// final control = FormControl<String>(value: 'Initial Value');
   ///
   /// control.value = 'New Value';
   ///
   /// // Resets to 'Initial Value' because no value was provided
-  /// // and nonNullable is true.
+  /// // and resetToInitialValue is true.
   /// control.reset();
   ///
   /// print(control.value); // output: 'Initial Value'
   /// ```
   ///
-  /// **Reset to null (nonNullable: false)**
+  /// **Reset to null (resetToInitialValue: false)**
   /// ```dart
   /// final control = FormControl<String>(
   ///   value: 'Initial Value',
-  ///   nonNullable: false,
+  ///   resetToInitialValue: false,
   /// );
   ///
   /// control.value = 'New Value';
   ///
   /// // Resets to null because no value was provided
-  /// // and nonNullable is false.
+  /// // and resetToInitialValue is false.
   /// control.reset();
   ///
   /// print(control.value); // output: null

@@ -470,15 +470,15 @@ void main() {
         expect(
           control.value,
           'initial',
-        ); // Because nonNullable is true by default
+        ); // Because resetToInitialValue is true by default
       },
     );
 
-    test('resets to null if nonNullable is false', () {
-      // Given: a control with an initial value and nonNullable as false
+    test('resets to null if resetToInitialValue is false', () {
+      // Given: a control with an initial value and resetToInitialValue as false
       final control = FormControl<String>(
         value: 'initialValue',
-        nonNullable: false,
+        resetToInitialValue: false,
       );
 
       // When: set a new value
@@ -492,10 +492,10 @@ void main() {
     });
 
     test(
-      'resets control to null if no value provided and nonNullable is false',
+      'resets control to null if no value provided and resetToInitialValue is false',
       () {
         // Arrange
-        final control = FormControl<String>(nonNullable: false);
+        final control = FormControl<String>(resetToInitialValue: false);
         control.value = 'changed value';
 
         // Act
