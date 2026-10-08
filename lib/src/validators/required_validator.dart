@@ -10,14 +10,14 @@ class RequiredValidator extends Validator<dynamic> {
 
   @override
   Map<String, dynamic>? validate(AbstractControl<dynamic> control) {
-    final error = <String, dynamic>{ValidationMessage.required: true};
+    final error = {ValidationMessage.required: true};
 
-    if (control.value == null) {
-      return error;
-    } else if (control.value is String) {
-      return (control.value as String).trim().isEmpty ? error : null;
-    }
-
-    return null;
+    return switch (control.value) {
+      null => error,
+      final String value when value.trim().isEmpty => error,
+      final Iterable<Object?> value when value.isEmpty => error,
+      final Map<Object?, Object?> value when value.isEmpty => error,
+      _ => null,
+    };
   }
 }
